@@ -1,0 +1,52 @@
+.add-movie-box {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  /* border: 2px solid #ccc; */
+  border-radius: 8px;
+  /* background-color: #fafafa; */
+  /* box-shadow: 0 2px 8px rgba(0,0,0,0.1); */
+  font-family: Arial, sans-serif;
+}
+
+.add-movie-box form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-movie-box label {
+  font-weight: bold;
+  margin-bottom: 6px;
+  margin-top: 12px;
+  color: #333;
+}
+
+.add-movie-box input {
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.add-movie-box input:focus {
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+.add-movie-box button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-movie-box button:hover {
+  background-color: #0056b3;
+}
