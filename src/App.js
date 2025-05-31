@@ -5,7 +5,7 @@ import MoviesList from "./components/MoviesList";
 import "./App.css";
 
 function App() {
-  const [movies, setMoveis] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [isLoading, setIsloading] = useState(false);
   const [error, setError] = useState(null);
   const [retrying, setRetrying] = useState(false);
@@ -15,21 +15,20 @@ function App() {
     setIsloading(true);
     setError(null);
     try {
-      const response = await fetch("https://swapi.info/api/films");
+      // const response = await fetch("https://swapi.info/api/films");
+      const response = await fetch("https://react-movie-http-dcf91-default-rtdb.firebaseio.com/movies.json");
       if (!response.ok) {
         throw new Error("Something went wrong...Retrying");
       }
       const data = await response.json();
-
-      const transformedData = data.map((movieData) => {
-        return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingText: movieData.opening_crawl,
-          release_date: movieData.release_date,
-        };
-      });
-      setMoveis(transformedData);
+      const loadedMovies  =[]
+      for(let key in data){
+        loadedMovies.push({id:key,title:data[key].title,
+openingText:data[key].openingText,
+releaseDate:data[key].release_date
+        })
+      }
+      setMovies(loadedMovies);
       setIsloading(false);
       setRetrying(false);
       if (intervalId) {
@@ -50,7 +49,7 @@ function App() {
   }, [intervalId,retrying]);
   useEffect(() => {
     fetchMoviesHandler();
-  }, [fetchMoviesHandler]);
+  }, [fetchMoviesHandler,movies]);
 
 
   const cancelRetryingHandler = () => {
@@ -75,10 +74,21 @@ function App() {
       </>
     );
   }
+  const addMovie=async(movie)=>{
+    console.log("this is the movei",movie)
+    const response=await fetch("https://react-movie-http-dcf91-default-rtdb.firebaseio.com/movies.json",{
+      method:"POST",
+      body:JSON.stringify(movie),
+        headers:{'Content-Type':'application/json'}
+    })
+    const data=await response.json()
+    console.log(data)
+
+  }
 
   return (
     <React.Fragment>
-       <section><AddMovie/></section>
+       <section><AddMovie  onAddMovie={addMovie}/></section>
       <section>
         <button onClick={() => fetchMoviesHandler()}>Fetch Movies</button>
       </section>

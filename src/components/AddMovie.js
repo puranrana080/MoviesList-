@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./AddMovie.css";
 
-const AddMovie = () => {
+const AddMovie = (props) => {
     const [formData,setFormData]=useState({
         title:"",
         openingText:"",
-        date:""
+        releaseDate:""
     })
 
     const handleChange=(name,value)=>{
@@ -17,7 +17,8 @@ const AddMovie = () => {
 
     const handleFromSubmit = (e)=>{
         e.preventDefault()
-        console.log("Form data submittedd",formData)
+       
+        props.onAddMovie(formData)
     }
     console.log(formData)
   return (
@@ -29,7 +30,7 @@ const AddMovie = () => {
           <label htmlFor="openingText">Opening Text</label>
           <textarea onChange={(e)=>handleChange(e.target.name,e.target.value)} value={formData.openingText} id="openingText" name="openingText" rows="5" />
           <label htmlFor="date">Release Date</label>
-          <input onChange={(e)=>handleChange(e.target.name,e.target.value)} value={formData.date} type="date" id="date" name="date" />
+          <input onChange={(e)=>handleChange(e.target.name,e.target.value)} value={formData.releaseDate} type="date" id="date" name="releaseDate" />
 
           <button>Add Movie</button>
         </form>
