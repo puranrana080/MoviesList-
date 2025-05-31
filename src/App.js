@@ -49,7 +49,7 @@ releaseDate:data[key].release_date
   }, [intervalId,retrying]);
   useEffect(() => {
     fetchMoviesHandler();
-  }, [fetchMoviesHandler,movies]);
+  }, [fetchMoviesHandler]);
 
 
   const cancelRetryingHandler = () => {
@@ -60,10 +60,15 @@ releaseDate:data[key].release_date
     setRetrying(false);
     setError("Retry cancelled by user");
   };
+  const handleMovieDelete=async(id)=>{
+    const response = await fetch(`https://react-movie-http-dcf91-default-rtdb.firebaseio.com/movies/${id}.json`,{method:'DELETE'})
+    const data=await response.json()
+    console.log(data)
+  }
 
   let content = <p>Found No Movies</p>;
   if (isLoading) content = <p>Loading ...</p>;
-  if (movies.length > 0) content = <MoviesList movies={movies} />;
+  if (movies.length > 0) content = <MoviesList movies={movies}  onDeleteMovie={handleMovieDelete}/>;
   if (error) {
     content = (
       <>
